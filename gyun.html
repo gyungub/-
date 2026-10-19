@@ -1,0 +1,148 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전쟁과 기아 | 균교 교육부 발표</title>
+<style>
+:root{--bg:#0b1020;--panel:#151d30;--red:#ef4444;--gold:#f5c451;--text:#f4f6fb;--muted:#aeb8cc;--line:#34415b}
+*{box-sizing:border-box}
+body{margin:0;background:#050812;color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;overflow:hidden}
+.deck{height:100dvh;display:grid;place-items:center;padding:18px}
+.slide{display:none;position:relative;width:min(100%,1200px);aspect-ratio:16/9;max-height:calc(100dvh - 92px);padding:5.2% 6%;overflow:hidden;background:radial-gradient(circle at 90% 10%,#202d48 0,transparent 35%),linear-gradient(135deg,#0d1425,#090d18 75%);border:1px solid #26324a;border-radius:18px;box-shadow:0 25px 80px #0009}
+.slide.active{display:flex;flex-direction:column;justify-content:center;animation:enter .28s ease-out}
+@keyframes enter{from{opacity:.4;transform:translateY(7px)}to{opacity:1;transform:none}}
+.slide:after{content:"GYUN EDUCATION DIVISION  /  FIELD REPORT";position:absolute;bottom:4%;right:5%;font-size:clamp(8px,.8vw,12px);letter-spacing:2px;color:#71809c}
+.eyebrow{color:var(--red);font-weight:800;letter-spacing:3px;font-size:clamp(11px,1.1vw,15px);text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(34px,5.4vw,72px);line-height:1.15;margin:0 0 24px;letter-spacing:-2px}
+h2{font-size:clamp(27px,3.6vw,48px);line-height:1.2;margin:0 0 28px;letter-spacing:-1px}
+p,li{font-size:clamp(15px,1.65vw,22px);line-height:1.65;color:#e3e8f2}
+.lead{font-size:clamp(18px,2.1vw,28px);color:var(--muted);max-width:850px}
+.accent{color:var(--gold)}.red{color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}
+.card{padding:20px 22px;border:1px solid var(--line);background:#111a2b;border-radius:14px}
+.card h3{font-size:clamp(17px,1.8vw,24px);margin:0 0 8px;color:var(--gold)}
+.card p{margin:0;font-size:clamp(14px,1.35vw,18px)}
+ul{padding-left:1.2em;margin:0}li{margin:7px 0}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.flow div{background:#172238;border:1px solid #3b4965;border-radius:12px;padding:17px 12px;text-align:center;font-size:clamp(13px,1.4vw,18px);font-weight:700}
+.flow div:not(:last-child):after{content:" →";color:var(--red)}
+.quote{font-size:clamp(23px,3vw,40px);font-weight:800;line-height:1.45;border-left:5px solid var(--red);padding-left:22px;max-width:900px}
+.meme-space{border:2px dashed #62708b;border-radius:16px;min-height:160px;display:grid;place-items:center;text-align:center;padding:20px;background:#111827;margin:12px 0}
+.meme-space strong{font-size:clamp(20px,2.5vw,34px);color:var(--gold)}
+.meme-space span{display:block;color:var(--muted);font-size:clamp(13px,1.3vw,17px);margin-top:8px}
+.small{font-size:clamp(11px,1.1vw,14px);color:var(--muted)}
+.num{position:absolute;top:4%;right:5%;color:#8290aa;font-size:13px;letter-spacing:2px}
+.controls{position:fixed;bottom:0;left:0;right:0;height:70px;display:flex;align-items:center;justify-content:center;gap:14px;background:#080b13;border-top:1px solid #1b2436}
+button{border:1px solid #38445c;border-radius:10px;background:#151d2d;color:white;padding:10px 18px;font-size:15px;cursor:pointer}
+button:hover{background:#27334a}button:disabled{opacity:.35;cursor:not-allowed}
+#counter{color:#b7c1d4;min-width:75px;text-align:center;font-variant-numeric:tabular-nums}
+.progress{position:fixed;top:0;left:0;height:4px;background:var(--red);width:10%;transition:width .2s}
+@media(max-width:650px){.deck{padding:7px}.slide{aspect-ratio:auto;width:100%;height:calc(100dvh - 82px);max-height:none;padding:9% 7%;border-radius:12px}.grid{gap:8px}.card{padding:12px}.flow{grid-template-columns:repeat(2,1fr)}.flow div:after{content:"" !important}.slide:after{font-size:8px}.controls{height:66px;gap:8px}button{padding:9px 12px}}
+@media print{body{overflow:visible;background:white}.deck{display:block;height:auto;padding:0}.slide{display:flex!important;width:100%;height:100vh;max-height:none;aspect-ratio:16/9;border-radius:0;box-shadow:none;break-after:page;print-color-adjust:exact;-webkit-print-color-adjust:exact}.controls,.progress{display:none}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<main class="deck" id="deck">
+<section class="slide active">
+<div class="num">01 / 10</div><div class="eyebrow">GYUN EDUCATION DIVISION · FIELD REPORT</div>
+<h1>전쟁과 기아,<br><span class="red">무너지는 일상</span></h1>
+<p class="lead">전쟁은 어떻게 사람들의 식탁까지 무너뜨리는가?</p>
+<div style="margin-top:30px;border-top:1px solid #35425b;padding-top:16px;color:#94a3bd">발표자: __________　|　약 10분</div>
+</section>
+<section class="slide">
+<div class="num">02 / 10</div><div class="eyebrow">01 · 핵심 개념</div><h2>전쟁과 기아는 무엇일까?</h2>
+<div class="grid">
+<div class="card"><h3>전쟁</h3><p>무력 충돌로 사람들의 생명과 안전, 사회 기반 시설이 큰 피해를 입는 상황.</p></div>
+<div class="card"><h3>기아</h3><p>충분한 식량을 안정적으로 얻지 못해 생존과 건강이 위협받는 상태.</p></div>
+</div>
+<p class="quote" style="margin-top:28px">핵심 질문: <span class="accent">전쟁은 왜 밥상까지 무너뜨릴까?</span></p>
+</section>
+<section class="slide">
+<div class="num">03 / 10</div><div class="eyebrow">02 · 식량 공급</div><h2>전쟁은 식량을 어떻게 끊을까?</h2>
+<div class="flow"><div>농경지 피해</div><div>운송로 차단</div><div>식량 가격 상승</div><div>구매 어려움</div></div>
+<ul>
+<li>농민이 안전하게 농사를 짓거나 수확하기 어려워질 수 있다.</li>
+<li>도로·항구·시장 등이 피해를 입으면 식량이 필요한 곳까지 도착하지 못한다.</li>
+<li>일자리와 소득이 줄어들면 시장에 식량이 있어도 살 수 없는 사람이 생긴다.</li>
+</ul>
+<p class="small">기억할 점: 식량 위기는 식량의 양뿐 아니라 안전한 접근과 구매 능력에도 달려 있다.</p>
+</section>
+<section class="slide">
+<div class="num">04 / 10</div><div class="eyebrow">03 · 사람들의 삶</div><h2>기아가 남기는 피해</h2>
+<div class="grid">
+<div class="card"><h3>건강</h3><p>영양 부족은 면역력과 신체 발달에 영향을 줄 수 있다.</p></div>
+<div class="card"><h3>교육</h3><p>배고픔과 생활 불안은 집중력과 학교생활을 어렵게 만든다.</p></div>
+<div class="card"><h3>가족과 안전</h3><p>먹을 것과 안전한 거처를 찾아 살던 곳을 떠나기도 한다.</p></div>
+<div class="card"><h3>미래</h3><p>건강·교육·생계가 함께 흔들리면 위기에서 회복하기 더 어려워진다.</p></div>
+</div>
+</section>
+<section class="slide">
+<div class="num">05 / 10</div><div class="eyebrow">04 · 악순환</div><h2>전쟁과 기아는 서로를 악화시킨다</h2>
+<div class="flow"><div>분쟁 발생</div><div>농업·물류 피해</div><div>식량 부족</div><div>생활 불안 심화</div></div>
+<p>식량 부족은 가족의 생계를 위협하고, 사회가 회복할 힘도 약하게 만든다. 안전이 확보되지 않으면 구호 물품을 전달하는 일조차 어려워질 수 있다.</p>
+<p class="quote">그래서 필요한 것은 <span class="red">긴급 구호</span>와 <span class="accent">장기적인 회복</span>을 함께 추진하는 것이다.</p>
+</section>
+<section class="slide">
+<div class="num">06 / 10</div><div class="eyebrow">GYUN MEME BREAK · 01</div><h2>자료 조사하다 현실의 난이도에 놀란 균</h2>
+<div class="meme-space"><div><strong>[ 여기에 밈 / 짤 삽입 ]</strong><span>추천 소재: 발표 자료 조사하다가 자료가 너무 많아진 균교 연구원<br>※ 실제 피해자나 특정 국가·민족을 조롱하는 밈은 사용하지 않기</span></div></div>
+<p class="small">전환 멘트: “밈은 잠깐 쉬어가는 용도입니다. 실제 상황은 웃어넘길 수 없기 때문에 해결 방법을 살펴보겠습니다.”</p>
+</section>
+<section class="slide">
+<div class="num">07 / 10</div><div class="eyebrow">05 · 국제 사회의 대응</div><h2>세계는 어떻게 돕고 있을까?</h2>
+<div class="grid">
+<div class="card"><h3>긴급 지원</h3><p>식량 배급, 영양 지원, 깨끗한 물과 위생 시설 제공.</p></div>
+<div class="card"><h3>의료와 보호</h3><p>의료 서비스, 임시 거처, 아동과 취약 계층 보호.</p></div>
+<div class="card"><h3>생계 회복</h3><p>농업 생산과 지역 시장이 다시 운영되도록 지원.</p></div>
+<div class="card"><h3>안전한 접근</h3><p>구호 인력과 물자가 필요한 사람들에게 도달할 수 있도록 통로와 안전 확보.</p></div>
+</div>
+<p class="small">국제기구와 인도주의 단체는 지역 상황에 따라 여러 방식으로 지원한다.</p>
+</section>
+<section class="slide">
+<div class="num">08 / 10</div><div class="eyebrow">06 · 우리가 할 수 있는 일</div><h2>학생인 우리가 할 수 있는 행동</h2>
+<ul>
+<li><b class="accent">정확히 알기:</b> 국제기구 등 신뢰할 수 있는 출처로 정보를 확인한다.</li>
+<li><b class="accent">확인하고 공유하기:</b> 출처 불명 영상과 과장된 숫자를 무작정 퍼뜨리지 않는다.</li>
+<li><b class="accent">참여하기:</b> 학교나 가정에서 검증된 기부·캠페인이 있는지 확인한다.</li>
+<li><b class="accent">낭비 줄이기:</b> 음식과 자원을 필요한 만큼 사용한다.</li>
+</ul>
+<p class="quote" style="margin-top:24px">작은 행동이 모든 문제를 해결하진 못해도, <span class="red">무관심보다는 낫다.</span></p>
+</section>
+<section class="slide">
+<div class="num">09 / 10</div><div class="eyebrow">GYUN MEME BREAK · 02</div><h2>균교 연구원, 행동 보고서를 제출할 시간이다</h2>
+<div class="meme-space"><div><strong>[ 밈 삽입 공간 ]</strong><span>예시 문구: “정보 확인 완료. 이제 실천 단계로 이동한다.”<br>균 캐릭터, 게임 퀘스트 완료창, 과몰입 연구원 짤 등을 활용</span></div></div>
+<p>웃음은 발표 준비 과정에만 두고, 실제 피해를 겪는 사람들의 상황은 존중한다.</p>
+</section>
+<section class="slide">
+<div class="num">10 / 10</div><div class="eyebrow">FINAL · 결론</div><h2>평범한 하루의 가치</h2>
+<ul>
+<li>전쟁은 생명뿐 아니라 식량·물·의료·교육에도 영향을 준다.</li>
+<li>기아를 줄이려면 긴급한 지원과 지역사회의 장기적인 회복이 함께 필요하다.</li>
+<li>우리는 정확한 정보를 확인하고, 검증된 방법으로 관심과 도움을 행동으로 옮길 수 있다.</li>
+</ul>
+<p class="quote" style="margin-top:22px">“누군가에게 평범한 한 끼는,<br><span class="accent">지켜져야 할 일상이다.</span>”</p>
+<p class="small">참고 자료를 추가할 때: 유엔 세계식량계획(WFP), 유엔식량농업기구(FAO), 유니세프(UNICEF)의 최신 자료를 확인하고 자료명·발행연도를 함께 표기하세요.</p>
+</section>
+</main>
+<nav class="controls" aria-label="슬라이드 이동">
+<button id="prev" type="button">← 이전</button><span id="counter">1 / 10</span><button id="next" type="button">다음 →</button><button id="full" type="button">전체 화면</button><button id="print" type="button">인쇄 / PDF</button>
+</nav>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let index=0;
+const counter=document.getElementById('counter'),progress=document.getElementById('progress');
+function show(n){index=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('active',i===index));counter.textContent=`${index+1} / ${slides.length}`;progress.style.width=((index+1)/slides.length*100)+'%';document.getElementById('prev').disabled=index===0;document.getElementById('next').disabled=index===slides.length-1}
+document.getElementById('prev').addEventListener('click',()=>show(index-1));document.getElementById('next').addEventListener('click',()=>show(index+1));
+document.getElementById('full').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()});
+document.getElementById('print').addEventListener('click',()=>window.print());
+document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(index+1)}if(['ArrowLeft','PageUp'].includes(e.key))show(index-1);if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});
+let touchX=null;document.addEventListener('touchstart',e=>touchX=e.changedTouches[0].screenX,{passive:true});document.addEventListener('touchend',e=>{if(touchX===null)return;let dx=e.changedTouches[0].screenX-touchX;if(Math.abs(dx)>70)show(index+(dx<0?1:-1));touchX=null},{passive:true});
+show(0);
+</script>
+</body>
+</html>'''
+path = Path("/mnt/data/war_hunger_gyun_presentation.html")
+path.write_text(html, encoding="utf-8")
+print(f"생성 완료: {path} ({path.stat().st_size:,} bytes)")
